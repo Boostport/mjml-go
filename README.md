@@ -1,6 +1,7 @@
 # mjml-go
 [![Go Reference](https://pkg.go.dev/badge/github.com/Boostport/mjml-go.svg)](https://pkg.go.dev/github.com/Boostport/mjml-go)
 [![Tests Status](https://github.com/Boostport/mjml-go/workflows/Tests/badge.svg)](https://github.com/Boostport/mjml-go)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/cbb1efa66cb148be5cb8/test_coverage)](https://codeclimate.com/github/Boostport/mjml-go/test_coverage)
 
 Compile [MJML](https://mjml.io/) into HTML directly in your Go application!
 
