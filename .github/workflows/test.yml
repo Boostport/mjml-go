@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+name: Tests
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install code climate
+        if: github.ref == 'refs/heads/main'
+        run: |
+          wget -O /tmp/cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+          chmod +x /tmp/cc-test-reporter
+          /tmp/cc-test-reporter before-build
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run tests
+        run: |
+          docker-compose run test
+          echo $? > /tmp/GO_EXIT_CODE
+      - name: Send results to code climate
+        if: github.ref == 'refs/heads/main'
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: |
+          /tmp/cc-test-reporter after-build --prefix github.com/$GITHUB_REPOSITORY --exit-code `cat /tmp/GO_EXIT_CODE`
