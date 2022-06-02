@@ -247,7 +247,6 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 func registerHostFunctions(ctx context.Context, r wazero.Runtime) error {
 
 	_, err := r.NewModuleBuilder("env").
-		// Allocate the least possible: 1 page (64KB).
 		ExportFunction("return_result", func(ctx context.Context, m api.Module, ptr uint32, len uint32, ident uint32) {
 			if ch, ok := results.get(int32(ident)); ok {
 				result, ok := m.Memory().Read(ctx, ptr, len)
