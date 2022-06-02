@@ -15,7 +15,7 @@ import (
 	"github.com/jackc/puddle"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/wasi"
+	"github.com/tetratelabs/wazero/wasi_snapshot_preview1"
 )
 
 //go:embed wasm/mjml.wasm.br
@@ -72,7 +72,7 @@ func init() {
 
 	runtime = wazero.NewRuntime()
 
-	if _, err := wasi.InstantiateSnapshotPreview1(nil, runtime); err != nil {
+	if _, err := wasi_snapshot_preview1.Instantiate(nil, runtime); err != nil {
 		panic(fmt.Sprintf("Error instantiating wasi snapshot preview 1: %s", err))
 	}
 
