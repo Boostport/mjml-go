@@ -10,7 +10,7 @@ Compile [MJML](https://mjml.io/) into HTML directly in your Go application!
 the usual approach is to wrap the library in a Node.js HTTP server and provide an endpoint through which
 applications not written in JavaScript can make HTTP requests to compile MJML into HTML.
 
-This approach poses some certain challenges, for example, if MJML is upgraded to a new major version in
+This approach poses some challenges, for example, if MJML is upgraded to a new major version in
 the deployed Node.js servers, applications calling these servers will need to be upgraded in a synchronized
 manner to avoid incompatibilities. In addition, running these extra servers introduces extra moving parts
 and the network into the mix.
