@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"sync"
+	"time"
 
 	"github.com/andybalholm/brotli"
 	"github.com/jackc/puddle"
@@ -96,6 +97,21 @@ func init() {
 	go periodicallyRemoveIdleResources(resourcePool)
 }
 
+func SetMaxWorkers(maxSize int32) error {
+	oldPool := resourcePool
+
+	newPool, err := newResourcePool(maxSize)
+
+	if err != nil {
+		return fmt.Errorf("error creating new resource pool: %w", err)
+	}
+
+	resourcePool = newPool
+	oldPool.Close()
+
+	return nil
+}
+
 type jsonResult struct {
 	HTML  string `json:"html"`
 	Error *Error `json:"error,omitempty"`
@@ -133,10 +149,33 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 	jsonInput := inputBytes.String()
 	jsonInputLen := uint64(len(jsonInput))
 
-	module, err := resourcePool.Acquire(ctx)
+	var (
+		module *puddle.Resource
+		tries  int
+	)
 
-	if err != nil {
-		return "", fmt.Errorf("error accquiring wasm module: %w", err)
+	for {
+		tries++
+
+		var err error
+
+		module, err = resourcePool.Acquire(ctx)
+
+		if err != nil {
+
+			if tries >= 30 {
+				return "", fmt.Errorf("unable to accquire wasm module after 30 tries: %w", err)
+			}
+
+			if err == puddle.ErrClosedPool {
+				time.Sleep(1 * time.Millisecond)
+				continue
+			}
+
+			return "", fmt.Errorf("error accquiring wasm module: %w", err)
+		}
+
+		break
 	}
 
 	defer module.Release()
