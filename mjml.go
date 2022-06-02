@@ -219,6 +219,8 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 
 	results.set(ident, resultCh)
 
+	defer results.delete(ident)
+
 	_, err = run.Call(ctx, inputPtr, jsonInputLen, uint64(ident))
 
 	if err != nil {
@@ -226,8 +228,6 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 	}
 
 	result := <-resultCh
-
-	results.delete(ident)
 
 	res := jsonResult{}
 
