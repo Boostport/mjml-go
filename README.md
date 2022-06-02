@@ -68,7 +68,7 @@ For minify:
 | `CaseSensitive`         | `true`  |
 | `CollapseWhitespace`    | `true`  |
 | `MinifyCSS`             | `false` |
-| `RemoveEmptyAttributes` | `true   |
+| `RemoveEmptyAttributes` | `true`  |
 
 For beautify:
 
