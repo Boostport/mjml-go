@@ -138,6 +138,10 @@ func BenchmarkNodeJS(b *testing.B) {
 					b.Fatalf("Error decoding response; %s", err)
 				}
 
+				if decoded.Error != nil {
+					b.Fatalf("Error converting input to HTML: %s", err)
+				}
+
 				if decoded.HTML != testCase.output {
 					b.Fatalf("Output for input (%s.mjml) does not match expected response", testCase.file)
 				}
@@ -152,8 +156,6 @@ func BenchmarkMJMLGo(b *testing.B) {
 	if err != nil {
 		b.Fatalf("Error getting test cases: %s", err)
 	}
-
-	err = SetMaxWorkers(200)
 
 	if err != nil {
 		b.Fatalf("Error setting max workers: %s", err)

@@ -21,47 +21,15 @@ import (
 //go:embed wasm/mjml.wasm.br
 var wasm []byte
 
-type resultChans struct {
-	sync.Mutex
-	chans map[int32]chan<- []byte
-}
-
-func (r *resultChans) set(ident int32, ch chan<- []byte) {
-	r.Lock()
-	defer r.Unlock()
-	r.chans[ident] = ch
-}
-
-func (r *resultChans) delete(ident int32) {
-	r.Lock()
-	defer r.Unlock()
-
-	delete(r.chans, ident)
-}
-
-func (r *resultChans) get(ident int32) (chan<- []byte, bool) {
-	r.Lock()
-	defer r.Unlock()
-
-	ch, ok := r.chans[ident]
-	return ch, ok
-}
-
-func newResultChans() *resultChans {
-	return &resultChans{
-		chans: map[int32]chan<- []byte{},
-	}
-}
-
 var (
 	runtime      wazero.Runtime
 	compiled     wazero.CompiledModule
-	results      *resultChans
+	results      *sync.Map
 	resourcePool *puddle.Pool
 )
 
 func init() {
-	results = newResultChans()
+	results = &sync.Map{}
 
 	br := brotli.NewReader(bytes.NewReader(wasm))
 	decompressed, err := ioutil.ReadAll(br)
@@ -217,9 +185,9 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 
 	resultCh := make(chan []byte, 1)
 
-	results.set(ident, resultCh)
+	results.Store(ident, resultCh)
 
-	defer results.delete(ident)
+	defer results.Delete(ident)
 
 	_, err = run.Call(ctx, inputPtr, jsonInputLen, uint64(ident))
 
@@ -248,11 +216,14 @@ func registerHostFunctions(ctx context.Context, r wazero.Runtime) error {
 
 	_, err := r.NewModuleBuilder("env").
 		ExportFunction("return_result", func(ctx context.Context, m api.Module, ptr uint32, len uint32, ident uint32) {
-			if ch, ok := results.get(int32(ident)); ok {
+			if ch, ok := results.Load(int32(ident)); ok {
+
 				result, ok := m.Memory().Read(ctx, ptr, len)
 
-				if ok {
-					ch <- result
+				resultCh, isResultCh := ch.(chan []byte)
+
+				if ok && isResultCh {
+					resultCh <- result
 				}
 			}
 		}).
