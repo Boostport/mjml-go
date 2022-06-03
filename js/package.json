@@ -1,7 +1,6 @@
 {
-  "name": "js",
-  "description": "",
-  "version": "",
+  "name": "mjml-wasm",
+  "private": true,
   "dependencies": {
     "@suborbital/runnable": "^0.15.1",
     "fastestsmallesttextencoderdecoder-encodeinto": "^1.0.22",
@@ -12,12 +11,10 @@
     "process": "^0.11.10"
   },
   "devDependencies": {
+    "lodash.merge": "^4.6.2",
+    "pkg": "^5.7.0",
     "prettier": "^2.6.2",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"
-  },
-  "scripts": {
-    "prebuild": "webpack",
-    "build": "javy build/index.js -o js.wasm"
   }
 }

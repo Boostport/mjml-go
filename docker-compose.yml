@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  build-wasm:
+  build-js:
     image: suborbital/builder-js:v0.5.1
     command: ./build.sh
     working_dir: /source/js
@@ -12,6 +12,14 @@ services:
     image: golang:1.18
     working_dir: /source
     command: go test -coverprofile c.out -v ./...
+    volumes:
+      - .:/source
+      - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
+
+  benchmark:
+    image: golang:1.18
+    working_dir: /source
+    command: go test -bench=. ./...
     volumes:
       - .:/source
       - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache

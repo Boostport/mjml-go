@@ -115,8 +115,8 @@ we have exposed those options.
 ### Run tests
 You can run tests using docker by running `docker compose run test` from the root of the repository.
 
-### Compile WebAssembly module
-Run `docker compose run build-wasm` from the root of the repository.
+### Compile WebAssembly module and build Node.js test server
+Run `docker compose run build-js` from the root of the repository.
 
 ## Other languages
 Since the MJML library is compiled into a WebAssembly module, it should be relatively easy to take the compiled module and

@@ -1,14 +1,15 @@
 const path = require("path");
 const webpack = require("webpack");
+const merge = require("lodash.merge");
 
-module.exports = {
+const config = {
   mode: "production",
   target: "es2019",
   optimization: {
     sideEffects: true,
   },
+  context: path.resolve(__dirname, "src"),
   resolve: {
-    extensions: [".js"],
     fallback: {
       fs: false,
       https: false,
@@ -23,7 +24,6 @@ module.exports = {
   },
   output: {
     globalObject: "this",
-    filename: "mjml.js",
     path: "/tmp",
     libraryTarget: "umd",
     library: "Suborbital",
@@ -39,3 +39,20 @@ module.exports = {
     hints: false,
   },
 };
+
+const wasmConfig = merge({}, config, {
+  entry: "./index.js",
+  output: {
+    filename: "mjml.js",
+  },
+});
+
+const testServerConfig = merge({}, config, {
+  target: "node18",
+  entry: "./server.js",
+  output: {
+    filename: "server.js",
+  },
+});
+
+module.exports = [wasmConfig, testServerConfig];
