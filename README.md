@@ -110,10 +110,43 @@ and `js-beautify` directly to support minifying and beautifying the output.
 - In the current implementation of mjml, it is not possible to customize the output of `js-beautify`. In this library,
 we have exposed those options.
 
+## Benchmarks
+We are benchmarking against a very [minimal Node.js server](js/src/server.js) serving a single API endpoint.
+```
+goos: linux
+goarch: amd64
+pkg: github.com/Boostport/mjml-go
+cpu: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+BenchmarkNodeJS/black-friday-8               285           4022315 ns/op
+BenchmarkNodeJS/one-page-8                   129           9089594 ns/op
+BenchmarkNodeJS/reactivation-email-8         170           6547689 ns/op
+BenchmarkNodeJS/real-estate-8                 73          16087753 ns/op
+BenchmarkNodeJS/recast-8                      84          13929756 ns/op
+BenchmarkNodeJS/receipt-email-8              163           7048938 ns/op
+BenchmarkMJMLGo/black-friday-8                10         110358400 ns/op
+BenchmarkMJMLGo/one-page-8                     5         260388660 ns/op
+BenchmarkMJMLGo/reactivation-email-8           5         233221960 ns/op
+BenchmarkMJMLGo/real-estate-8                  2         506206350 ns/op
+BenchmarkMJMLGo/recast-8                       3         411058667 ns/op
+BenchmarkMJMLGo/receipt-email-8                5         210282600 ns/op
+PASS
+ok      github.com/Boostport/mjml-go    68.030s
+```
+
+In its current state the Node.js implementation is significantly faster than `mjml-go`. However, with improvements to
+Wazero (in particular [tetratelabs/wazero#618](https://github.com/tetratelabs/wazero/issues/618) and [tetratelabs/wazero#179](https://github.com/tetratelabs/wazero/issues/179)),
+module instantiation times should see great improvement, reducing worker spin-up times and improving the compilation performance.
+
+Also, we should see improvements from Javy improve these numbers as well.
+
 ## Development
 
 ### Run tests
 You can run tests using docker by running `docker compose run test` from the root of the repository.
+
+### Run benchmarks
+From the root of the repository, run `go test -bench=. ./...`. Alternatively, you can run them in a docker container:
+`docker compose run benchmark`
 
 ### Compile WebAssembly module and build Node.js test server
 Run `docker compose run build-js` from the root of the repository.
