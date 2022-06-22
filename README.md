@@ -117,20 +117,20 @@ goos: linux
 goarch: amd64
 pkg: github.com/Boostport/mjml-go
 cpu: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
-BenchmarkNodeJS/black-friday-8               285           4022315 ns/op
-BenchmarkNodeJS/one-page-8                   129           9089594 ns/op
-BenchmarkNodeJS/reactivation-email-8         170           6547689 ns/op
-BenchmarkNodeJS/real-estate-8                 73          16087753 ns/op
-BenchmarkNodeJS/recast-8                      84          13929756 ns/op
-BenchmarkNodeJS/receipt-email-8              163           7048938 ns/op
-BenchmarkMJMLGo/black-friday-8                10         110358400 ns/op
-BenchmarkMJMLGo/one-page-8                     5         260388660 ns/op
-BenchmarkMJMLGo/reactivation-email-8           5         233221960 ns/op
-BenchmarkMJMLGo/real-estate-8                  2         506206350 ns/op
-BenchmarkMJMLGo/recast-8                       3         411058667 ns/op
-BenchmarkMJMLGo/receipt-email-8                5         210282600 ns/op
+BenchmarkNodeJS/black-friday-8               244           4487173 ns/op
+BenchmarkNodeJS/one-page-8                   100          10851815 ns/op
+BenchmarkNodeJS/reactivation-email-8         159           8122325 ns/op
+BenchmarkNodeJS/real-estate-8                 58          20424659 ns/op
+BenchmarkNodeJS/recast-8                      81          16484556 ns/op
+BenchmarkNodeJS/receipt-email-8              163           7141907 ns/op
+BenchmarkMJMLGo/black-friday-8                10         114639500 ns/op
+BenchmarkMJMLGo/one-page-8                     4         280523325 ns/op
+BenchmarkMJMLGo/reactivation-email-8           4         254601050 ns/op
+BenchmarkMJMLGo/real-estate-8                  3         471048467 ns/op
+BenchmarkMJMLGo/recast-8                       3         410146833 ns/op
+BenchmarkMJMLGo/receipt-email-8                5         205759920 ns/op
 PASS
-ok      github.com/Boostport/mjml-go    68.030s
+ok      github.com/Boostport/mjml-go    56.393s
 ```
 
 In its current state the Node.js implementation is significantly faster than `mjml-go`. However, with improvements to
