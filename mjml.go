@@ -38,7 +38,7 @@ func init() {
 		panic(fmt.Sprintf("Error decompressing wasm file: %s", err))
 	}
 
-	runtime = wazero.NewRuntime()
+	runtime = wazero.NewRuntime() // TODO: this should be closed
 
 	if _, err := wasi_snapshot_preview1.Instantiate(nil, runtime); err != nil {
 		panic(fmt.Sprintf("Error instantiating wasi snapshot preview 1: %s", err))
