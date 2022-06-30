@@ -9,9 +9,5 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
-github.com/tetratelabs/wazero v0.0.0-20220601031808-41a3dd341c31 h1:65OfVm5UseIXJQJUl4N9pLlFbiFqHMrORDdxktPpNhQ=
-github.com/tetratelabs/wazero v0.0.0-20220601031808-41a3dd341c31/go.mod h1:Y4X/zO4sC2dJjZG9GDYNRbJGogfqFYJY/BbyKlOxXGI=
-github.com/tetratelabs/wazero v0.0.0-20220601110143-92ba4929e531 h1:MEwr6kBuK+N6IcHoWCvqHFL2Kj47Wg9bjCr0EPwfq+k=
-github.com/tetratelabs/wazero v0.0.0-20220601110143-92ba4929e531/go.mod h1:Y4X/zO4sC2dJjZG9GDYNRbJGogfqFYJY/BbyKlOxXGI=
-github.com/tetratelabs/wazero v0.0.0-20220621063451-2f8276e853f3 h1:mc/hz9HvWypSpN79W2Y5L8Hw2H7Mhrz6JiBR56NN2yI=
-github.com/tetratelabs/wazero v0.0.0-20220621063451-2f8276e853f3/go.mod h1:Y4X/zO4sC2dJjZG9GDYNRbJGogfqFYJY/BbyKlOxXGI=
+github.com/tetratelabs/wazero v0.0.0-20220630052417-63f6b2231142 h1:ZnK50yYXmYRlAOpOzYw6Xu/QWU2kP8bDeVLQDzQtTas=
+github.com/tetratelabs/wazero v0.0.0-20220630052417-63f6b2231142/go.mod h1:Y4X/zO4sC2dJjZG9GDYNRbJGogfqFYJY/BbyKlOxXGI=
