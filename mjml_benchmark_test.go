@@ -5,8 +5,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"os/exec"
 	"testing"
 	"time"
@@ -32,13 +33,13 @@ func getTestTemplates() ([]testTemplate, error) {
 	}
 
 	for _, file := range files {
-		input, err := ioutil.ReadFile("testdata/" + file + ".mjml")
+		input, err := os.ReadFile("testdata/" + file + ".mjml")
 
 		if err != nil {
 			return result, fmt.Errorf("error reading input %s.mjml: %w", file, err)
 		}
 
-		output, err := ioutil.ReadFile("testdata/" + file + ".html")
+		output, err := os.ReadFile("testdata/" + file + ".html")
 
 		if err != nil {
 			return result, fmt.Errorf("error reading output %s.mjml: %w", file, err)
@@ -126,7 +127,7 @@ func BenchmarkNodeJS(b *testing.B) {
 
 				var decoded jsonResult
 
-				body, err := ioutil.ReadAll(result.Body)
+				body, err := io.ReadAll(result.Body)
 
 				if err != nil {
 					b.Fatalf("Error reading response body: %s", err)

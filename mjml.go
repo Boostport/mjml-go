@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"sync"
 	"time"
 
@@ -32,7 +32,7 @@ func init() {
 	results = &sync.Map{}
 
 	br := brotli.NewReader(bytes.NewReader(wasm))
-	decompressed, err := ioutil.ReadAll(br)
+	decompressed, err := io.ReadAll(br)
 
 	if err != nil {
 		panic(fmt.Sprintf("Error decompressing wasm file: %s", err))

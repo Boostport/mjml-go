@@ -4,8 +4,8 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"io/ioutil"
 	"math/big"
+	"os"
 	"sync"
 	"testing"
 	"time"
@@ -23,7 +23,7 @@ func TestToHTML(t *testing.T) {
 	}
 
 	for _, file := range files {
-		contents, err := ioutil.ReadFile("testdata/" + file + ".mjml")
+		contents, err := os.ReadFile("testdata/" + file + ".mjml")
 
 		if err != nil {
 			t.Fatalf("Error reading file: %s", file)
@@ -35,7 +35,7 @@ func TestToHTML(t *testing.T) {
 			t.Errorf("Error converting mjml file (%s) to html: %s", file, err)
 		}
 
-		expected, err := ioutil.ReadFile("testdata/" + file + ".html")
+		expected, err := os.ReadFile("testdata/" + file + ".html")
 
 		if err != nil {
 			t.Fatalf("Error reading expected html: %s", err)
@@ -66,13 +66,13 @@ func TestConcurrency(t *testing.T) {
 	var testCases []testCase
 
 	for _, file := range files {
-		input, err := ioutil.ReadFile("testdata/" + file + ".mjml")
+		input, err := os.ReadFile("testdata/" + file + ".mjml")
 
 		if err != nil {
 			t.Fatalf("Error reading input test data (%s.mjml): %s", file, err)
 		}
 
-		expected, err := ioutil.ReadFile("testdata/" + file + ".html")
+		expected, err := os.ReadFile("testdata/" + file + ".html")
 
 		if err != nil {
 			t.Fatalf("Error reading expected test data (%s.html): %s", file, err)
@@ -152,13 +152,13 @@ func TestSetMaxWorkers(t *testing.T) {
 	var testCases []testCase
 
 	for _, file := range files {
-		input, err := ioutil.ReadFile("testdata/" + file + ".mjml")
+		input, err := os.ReadFile("testdata/" + file + ".mjml")
 
 		if err != nil {
 			t.Fatalf("Error reading input test data (%s.mjml): %s", file, err)
 		}
 
-		expected, err := ioutil.ReadFile("testdata/" + file + ".html")
+		expected, err := os.ReadFile("testdata/" + file + ".html")
 
 		if err != nil {
 			t.Fatalf("Error reading expected test data (%s.html): %s", file, err)
