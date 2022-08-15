@@ -6,10 +6,16 @@ on:
 name: Tests
 jobs:
   test:
+    strategy:
+      matrix:
+        go:
+          - version: 1.19
+            report: true
+          - version: 1.18
     runs-on: ubuntu-latest
     steps:
       - name: Install code climate
-        if: github.ref == 'refs/heads/main'
+        if: matrix.go.report == true && github.ref == 'refs/heads/main'
         run: |
           wget -O /tmp/cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
           chmod +x /tmp/cc-test-reporter
@@ -17,11 +23,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Run tests
+        env:
+          GO_VERSION: ${{ matrix.go.version }}
         run: |
           docker-compose run test
           echo $? > /tmp/GO_EXIT_CODE
       - name: Send results to code climate
-        if: github.ref == 'refs/heads/main'
+        if: matrix.go.report == true && github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: |
