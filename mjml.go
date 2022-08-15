@@ -233,6 +233,9 @@ func registerHostFunctions(ctx context.Context, r wazero.Runtime) error {
 		ExportFunction("request_set_field", func(_ uint32, _ uint32, _ uint32, _ uint32, _ uint32, _ uint32) uint32 {
 			panic("request_set_field is unimplemented")
 		}).
+		ExportFunction("resp_set_header", func(_ uint32, _ uint32, _ uint32, _ uint32, _ uint32) {
+			panic("resp_set_header is unimplemented")
+		}).
 		ExportFunction("cache_get", func(_ uint32, _ uint32, _ uint32) uint32 {
 			panic("cache_get is unimplemented")
 		}).
