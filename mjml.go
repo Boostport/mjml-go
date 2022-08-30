@@ -29,6 +29,8 @@ var (
 )
 
 func init() {
+	ctx := context.Background()
+
 	results = &sync.Map{}
 
 	br := brotli.NewReader(bytes.NewReader(wasm))
@@ -38,19 +40,19 @@ func init() {
 		panic(fmt.Sprintf("Error decompressing wasm file: %s", err))
 	}
 
-	runtime = wazero.NewRuntime() // TODO: this should be closed
+	runtime = wazero.NewRuntime(ctx) // TODO: this should be closed
 
-	if _, err := wasi_snapshot_preview1.Instantiate(nil, runtime); err != nil {
+	if _, err := wasi_snapshot_preview1.Instantiate(ctx, runtime); err != nil {
 		panic(fmt.Sprintf("Error instantiating wasi snapshot preview 1: %s", err))
 	}
 
-	err = registerHostFunctions(nil, runtime)
+	err = registerHostFunctions(ctx, runtime)
 
 	if err != nil {
 		panic(fmt.Sprintf("Error registering host functions: %s", err))
 	}
 
-	compiled, err = runtime.CompileModule(nil, decompressed, wazero.NewCompileConfig())
+	compiled, err = runtime.CompileModule(ctx, decompressed, wazero.NewCompileConfig())
 
 	if err != nil {
 		panic(fmt.Sprintf("Error compiling wasm module: %s", err))
