@@ -15,7 +15,7 @@ import (
 	"github.com/jackc/puddle"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/wasi_snapshot_preview1"
+	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 )
 
 //go:embed wasm/mjml.wasm.br
