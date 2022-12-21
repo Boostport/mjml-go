@@ -175,7 +175,7 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 
 	defer deallocate.Call(ctx, inputPtr)
 
-	if !memory.Write(ctx, uint32(inputPtr), []byte(jsonInput)) {
+	if !memory.Write(uint32(inputPtr), []byte(jsonInput)) {
 		return "", fmt.Errorf("error writing input to memory: %w", err)
 	}
 
@@ -294,7 +294,7 @@ func registerHostFunctions(ctx context.Context, r wazero.Runtime) error {
 // api.GoModuleFunc because it isn't called frequently.
 func returnResult(ctx context.Context, m api.Module, ptr uint32, len uint32, ident uint32) {
 	if ch, ok := results.Load(int32(ident)); ok {
-		result, ok := m.Memory().Read(ctx, ptr, len)
+		result, ok := m.Memory().Read(ptr, len)
 
 		resultCh, isResultCh := ch.(chan []byte)
 
