@@ -285,7 +285,7 @@ func registerHostFunctions(ctx context.Context, r wazero.Runtime) error {
 			panic("log_msg is unimplemented")
 		}).
 		Export("log_msg").
-		Instantiate(ctx, r)
+		Instantiate(ctx)
 
 	return err
 }
