@@ -2,7 +2,7 @@ version: '3'
 
 services:
   build-js:
-    image: suborbital/builder-js:v0.5.4
+    image: suborbital/builder-js:v0.6.0
     command: ./build.sh
     working_dir: /source/js
     volumes:
