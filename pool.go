@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/jackc/puddle"
+	"github.com/jackc/puddle/v2"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
 )
 
-func constructor(ctx context.Context) (interface{}, error) {
+func constructor(ctx context.Context) (api.Module, error) {
 
 	id, err := randomIdentifier()
 
@@ -30,21 +30,19 @@ func constructor(ctx context.Context) (interface{}, error) {
 	return module, nil
 }
 
-func destructor(module interface{}) {
-
-	mod, ok := module.(api.Module)
-
-	if !ok {
-		panic("destructor was not given an api.Module")
-	}
-
-	_ = mod.Close(context.Background()) // Not possible to deal with this error
+func destructor(module api.Module) {
+	_ = module.Close(context.Background()) // Not possible to deal with this error
 }
 
-func newResourcePool(maxSize int32) (*puddle.Pool, error) {
-	pool := puddle.NewPool(constructor, destructor, maxSize)
+func newResourcePool(maxSize int32) (*puddle.Pool[api.Module], error) {
+	//pool := puddle.NewPool(constructor, destructor, maxSize)
+	pool, err := puddle.NewPool(&puddle.Config[api.Module]{Constructor: constructor, Destructor: destructor, MaxSize: maxSize})
 
-	err := pool.CreateResource(context.Background())
+	if err != nil {
+		return pool, fmt.Errorf("error creating resource pool: %w", err)
+	}
+
+	err = pool.CreateResource(context.Background())
 
 	if err != nil {
 		return pool, fmt.Errorf("error prewarming resource pool: %w", err)
@@ -53,7 +51,7 @@ func newResourcePool(maxSize int32) (*puddle.Pool, error) {
 	return pool, nil
 }
 
-func periodicallyRemoveIdleResources(pool *puddle.Pool) {
+func periodicallyRemoveIdleResources(pool *puddle.Pool[api.Module]) {
 
 	duration := 2 * time.Second
 	ticker := time.NewTicker(duration)

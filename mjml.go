@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/andybalholm/brotli"
-	"github.com/jackc/puddle"
+	"github.com/jackc/puddle/v2"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
@@ -25,7 +25,7 @@ var (
 	runtime      wazero.Runtime
 	compiled     wazero.CompiledModule
 	results      *sync.Map
-	resourcePool *puddle.Pool
+	resourcePool *puddle.Pool[api.Module]
 )
 
 func init() {
@@ -120,7 +120,7 @@ func ToHTML(ctx context.Context, mjml string, toHTMLOptions ...ToHTMLOption) (st
 	jsonInputLen := uint64(len(jsonInput))
 
 	var (
-		module *puddle.Resource
+		module *puddle.Resource[api.Module]
 		tries  int
 	)
 
