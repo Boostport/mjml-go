@@ -6,15 +6,15 @@
     "fastestsmallesttextencoderdecoder-encodeinto": "^1.0.22",
     "global": "^4.4.0",
     "html-minifier": "^4.0.0",
-    "js-beautify": "^1.14.3",
-    "mjml-browser": "^4.12.0",
+    "js-beautify": "^1.14.8",
+    "mjml-browser": "^4.14.1",
     "process": "^0.11.10"
   },
   "devDependencies": {
     "lodash.merge": "^4.6.2",
-    "pkg": "^5.7.0",
-    "prettier": "^2.6.2",
-    "webpack": "^5.38.1",
+    "pkg": "^5.8.1",
+    "prettier": "^3.0.0",
+    "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"
   }
 }
