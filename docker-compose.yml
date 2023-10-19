@@ -9,7 +9,7 @@ services:
       - .:/source
 
   test:
-    image: golang:${GO_VERSION:-1.20}
+    image: golang:${GO_VERSION:-1.21}
     working_dir: /source
     command: go test -coverprofile c.out -v ./...
     volumes:
@@ -17,7 +17,7 @@ services:
       - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
 
   benchmark:
-    image: golang:${GO_VERSION:-1.20}
+    image: golang:${GO_VERSION:-1.21}
     working_dir: /source
     command: go test -bench=. ./...
     volumes:
