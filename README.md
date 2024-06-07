@@ -117,20 +117,20 @@ goos: linux
 goarch: amd64
 pkg: github.com/Boostport/mjml-go
 cpu: 12th Gen Intel(R) Core(TM) i7-12700F
-BenchmarkNodeJS/black-friday-20                      594           1865068 ns/op
-BenchmarkNodeJS/one-page-20                          288           3978085 ns/op
-BenchmarkNodeJS/reactivation-email-20                198           5969088 ns/op
-BenchmarkNodeJS/real-estate-20                       153           7644823 ns/op
-BenchmarkNodeJS/recast-20                            180           6747342 ns/op
-BenchmarkNodeJS/receipt-email-20                     344           3396417 ns/op
-BenchmarkMJMLGo/black-friday-20                       19          59296864 ns/op
-BenchmarkMJMLGo/one-page-20                            8         136529250 ns/op
-BenchmarkMJMLGo/reactivation-email-20                  9         121438942 ns/op
-BenchmarkMJMLGo/real-estate-20                         4         265611426 ns/op
-BenchmarkMJMLGo/recast-20                              5         213318243 ns/op
-BenchmarkMJMLGo/receipt-email-20                       9         117782824 ns/op
+BenchmarkNodeJS/black-friday-20                      534           2303756 ns/op
+BenchmarkNodeJS/one-page-20                          248           4691666 ns/op
+BenchmarkNodeJS/reactivation-email-20                176           6462409 ns/op
+BenchmarkNodeJS/real-estate-20                       136           8432862 ns/op
+BenchmarkNodeJS/recast-20                            162           7306482 ns/op
+BenchmarkNodeJS/receipt-email-20                     301           3974783 ns/op
+BenchmarkMJMLGo/black-friday-20                       25          44522946 ns/op
+BenchmarkMJMLGo/one-page-20                           10         102439103 ns/op
+BenchmarkMJMLGo/reactivation-email-20                 13          89384155 ns/op
+BenchmarkMJMLGo/real-estate-20                         6         196078406 ns/op
+BenchmarkMJMLGo/recast-20                              7         158731099 ns/op
+BenchmarkMJMLGo/receipt-email-20                      13          88048332 ns/op
 PASS
-ok      github.com/Boostport/mjml-go    31.910s
+ok      github.com/Boostport/mjml-go    28.476s
 ```
 
 In its current state the Node.js implementation is significantly faster than `mjml-go`. However, with improvements to
