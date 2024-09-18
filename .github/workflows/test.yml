@@ -26,7 +26,7 @@ jobs:
         env:
           GO_VERSION: ${{ matrix.go.version }}
         run: |
-          docker-compose run test
+          docker compose run test
           echo $? > /tmp/GO_EXIT_CODE
       - name: Send results to code climate
         if: matrix.go.report == true && github.ref == 'refs/heads/main'
