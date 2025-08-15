@@ -13,24 +13,20 @@ jobs:
             report: true
           - version: "1.24"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - name: Install code climate
-        if: matrix.go.report == true && github.ref == 'refs/heads/main'
-        run: |
-          wget -O /tmp/cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-          chmod +x /tmp/cc-test-reporter
-          /tmp/cc-test-reporter before-build
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
         env:
           GO_VERSION: ${{ matrix.go.version }}
-        run: |
-          docker compose run test
-          echo $? > /tmp/GO_EXIT_CODE
-      - name: Send results to code climate
+        run: docker compose run test
+      - name: Send results to Qlty.sh
         if: matrix.go.report == true && github.ref == 'refs/heads/main'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          /tmp/cc-test-reporter after-build --prefix github.com/$GITHUB_REPOSITORY --exit-code `cat /tmp/GO_EXIT_CODE`
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          oidc: true
+          files: c.out
+          strip-prefix: github.com/${{ github.repository }}/
